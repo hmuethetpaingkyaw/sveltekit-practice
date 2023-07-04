@@ -1,13 +1,16 @@
 <script>
-	  import "../app.css";
+	  import Navbar from "$lib/components/navbar/Navbar.svelte";
+import "../app.css";
 </script>
 
-<div >
 
-	<main>
+	
+		<Navbar />
+	
+	<main class="w-full h-screen">
 		<slot />
 	</main>
-</div>
+
 
 <style>
 	
