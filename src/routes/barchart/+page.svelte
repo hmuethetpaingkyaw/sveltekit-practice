@@ -1,87 +1,107 @@
 <script lang="ts">
+  import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
+
+  const points = [
+    { year: 1990, birthrate: 16.7 },
+    { year: 1995, birthrate: 14.6 },
+    { year: 2000, birthrate: 14.4 },
+    { year: 2005, birthrate: 14 },
+    { year: 2010, birthrate: 13 },
+    { year: 2015, birthrate: 12.4 },
+  ];
+
+  const yTicks = [1990, 1995, 2000, 2005, 2010, 2015];
+  const xTicks = [0, 5, 10, 15, 20];
+  const padding = { top: 20, right: 15, bottom: 20, left:50 };
+
+  let width = 500;
+  let height = 200;
+
+  function formatMobile(tick: any) {
+    return "'" + tick.toString().slice(-2);
+  }
+  const BAR_PADDING = 0.3;
+  $: yScale = 
+  //scaleLinear()
+  //@ts-ignore
+    //.domain([0, yTicks.length])
+    scaleBand()
     //@ts-ignore
-  import * as d3 from "d3";
-  import { data } from "./data";
-//   import { onMount } from "svelte";
+    .domain(yTicks)
+    .range([padding.bottom, height - padding.bottom, padding.top])
+    .padding(BAR_PADDING);
 
-  let width = 800;
-  let height = 600;
+  $: xScale = scaleLinear()
+    .domain([0, Math.max.apply(null, xTicks)])
+    .range([padding.left, width - padding.right]);
 
-  const margin = { top: 20, right: 20, bottom: 20, left: 180 };
-  const innerHeight = height - margin.top - margin.bottom;
-  const innerWidth = width - margin.left - margin.right;
+  $: colorScale = 
+    scaleOrdinal<string>()
+       //@ts-ignore
+    .domain(yTicks)
+    .range(["#e0ac2b", "#e85252", "#6689c6", "#9a6fb0", "#a53253"]);
 
-  const [min, max] = d3.extent(data.map((d) => d.value));
-  $: xScale = d3
-    .scaleLinear()
-    .domain([0, max || 10])
-    .range([0, innerWidth]);
+  $: innerHeight = height - (padding.top + padding.bottom);
+  $: barWidth = innerHeight / yTicks.length;
 
-  const groups = data.sort((a, b) => b.value - a.value).map((d) => d.name);
-  $: yScale = d3
-    .scaleBand()
-    .domain(groups)
-    .range([0, innerHeight])
-    .padding(0.01);
-
-//   let axiesRef: any;
-
-  //   onMount(() => {
-  //     const svgElement = d3.select(axiesRef.current);
-
-  //     const xAxisGenerator = d3.axisBottom(xScale);
-
-  //     svgElement
-  //       .append("g")
-  //       .attr("transform", "translate(0," + ( innerHeight) + ")")
-  //       .call(xAxisGenerator);
-
-  //     const yAxisGenerator = d3.axisLeft(yScale);
-  //     svgElement.append("g").call(yAxisGenerator);
-  //   });
 </script>
 
-<div class="flex items-center justify-center h-full bg-white">
-  <svg {width} {height}>
-    <g
-      width={innerWidth}
-      height={innerHeight}
-      transform={`translate(${margin.left},${margin.top})`}
-    >
-      {#each data as d (d.name)}
-        <text
-          text-anchor="end"
-          x="-3"
-          dy=".3em"
-          y={yScale(d.name) + yScale.bandwidth() / 2}
-          fill="black"
-        >
-          {d.name}
-        </text>
-        <rect
-          x={xScale(0)}
-          y={yScale(d.name)}
-          width={xScale(d.value)}
-          height={yScale.bandwidth()}
-          opacity={0.7}
-          stroke="#9d174d"
-          fill="#9d174d"
-          fill-opacity={0.5}
-          rx={1}
-        />
-      {/each}
-      <!-- <g 
-      width={ innerWidth} height={ innerHeight}
-      transform={`translate(${[innerWidth, innerHeight].join(",")})`}
-      bind:this={axiesRef} /> -->
-      {#each xScale.ticks() as tickValue}
-        <g transform={`translate(${xScale(tickValue)},0)`}>
-          <line y2={innerHeight} stroke="black" />
-          <text text-anchor="middle" dy=".7em" y={innerHeight + 3}>
-            {tickValue}
-          </text>
+<h2 class="text-center">US birthrate by year</h2>
+
+<div
+  class="w-full max-w-[500px] my-0 mx-auto"
+  bind:clientWidth={width}
+  bind:clientHeight={height}
+>
+  <svg {height} width="100%">
+    <!-- x axis -->
+    <g class="axis x-axis">
+      {#each xTicks as tick}
+        <g class="tick tick-{tick}" transform="translate({xScale(tick)}, {height})">
+          <!-- <line x2="100%" stroke="#e2e2e2" stroke-dasharray={2} /> -->
+          <text y="-4" fill="#ccc" text-anchor="start"
+            >{tick} </text
+          >
         </g>
+      {/each}
+    </g>
+
+    <!-- y axis -->
+    <g class="axis y-axis">
+      {#each points as point, i}
+        <g class="tick" >
+          <text x={barWidth / 2} text-anchor="middle"  y={yScale(point.year) + yScale.bandwidth() / 2}
+            >{width > 380 ? point.year : formatMobile(point.year)}</text
+          >
+        </g>
+      {/each}
+    </g>
+
+    <g class="bars">
+      {#each points as point, i}
+        <rect
+          fill={colorScale(`${i}`)}
+          stroke="none"
+          opacity={0.65}
+          x={padding.left}
+          y={yScale(point.year)}
+          height={yScale.bandwidth()}
+          width={xScale(point.birthrate)}
+        />
       {/each}
     </g>
   </svg>
 </div>
+
+<style>
+  .tick {
+    font-family: Helvetica, Arial;
+    font-size: 0.725em;
+    font-weight: 200;
+  }
+
+  .tick.tick-0 line {
+    stroke-dasharray: 0;
+  }
+
+</style>

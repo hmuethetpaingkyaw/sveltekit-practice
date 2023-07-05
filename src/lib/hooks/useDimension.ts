@@ -1,7 +1,7 @@
-<script lang="ts">
-  import { onDestroy, onMount } from "svelte";
 
-  export const useDimensions = (targetRef: any) => {
+  import { onDestroy, onMount } from "svelte";
+  import { browser } from '$app/environment';
+   const useDimensions = (targetRef: any) => {
     let dimensions = {
       width: 0,
       height: 0,
@@ -19,13 +19,19 @@
     };
 
     onMount(() => {
-      window.addEventListener("resize", handleResize);
+      if(browser) {
+        window.addEventListener("resize", handleResize);
+      }
       getDimensions();
     });
 
     onDestroy(() => {
-      window.removeEventListener("resize", handleResize);
+      if(browser) {
+        window.removeEventListener("resize", handleResize);
+      }
     });
     return dimensions;
   };
-</script>
+
+  export default useDimensions
+

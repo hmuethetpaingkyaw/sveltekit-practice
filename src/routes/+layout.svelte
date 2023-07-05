@@ -7,7 +7,7 @@ import "../app.css";
 	
 		<Navbar />
 	
-	<main class="w-full h-screen">
+	<main class="w-full h-screen bg-white">
 		<slot />
 	</main>
 
