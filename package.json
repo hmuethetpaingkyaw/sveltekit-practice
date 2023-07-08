@@ -15,6 +15,7 @@
 		"@sveltejs/kit": "^1.20.4",
 		"@types/cookie": "^0.5.1",
 		"@types/d3": "^7.4.0",
+		"@types/gtag.js": "^0.0.12",
 		"@types/topojson-client": "^3.1.1",
 		"autoprefixer": "^10.4.14",
 		"postcss": "^8.4.24",
