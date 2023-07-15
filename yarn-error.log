@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\admin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add topojson-client
+  C:\Program Files\nodejs\node.exe C:\Users\admin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add socket.io-client
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\php-8.1.11;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\dotnet\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\admin\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\admin\AppData\Local\GitHubDesktop\bin;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Roaming\Composer\vendor\bin;D:\flutter\bin;C:\Users\admin\AppData\Roaming\nvm;C:\Program Files\nodejs
@@ -34,6 +34,8 @@ npm manifest:
   		"@sveltejs/kit": "^1.20.4",
   		"@types/cookie": "^0.5.1",
   		"@types/d3": "^7.4.0",
+  		"@types/gtag.js": "^0.0.12",
+  		"@types/topojson-client": "^3.1.1",
   		"autoprefixer": "^10.4.14",
   		"postcss": "^8.4.24",
   		"svelte": "^4.0.0",
@@ -46,7 +48,8 @@ npm manifest:
   	"type": "module",
   	"dependencies": {
   		"d3": "^7.8.5",
-  		"daisyui": "^3.1.7"
+  		"daisyui": "^3.1.7",
+  		"topojson-client": "^3.1.0"
   	}
   }
 
@@ -419,10 +422,30 @@ Lockfile:
     resolved "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.10.tgz"
     integrity sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==
   
+  "@types/gtag.js@^0.0.12":
+    version "0.0.12"
+    resolved "https://registry.npmjs.org/@types/gtag.js/-/gtag.js-0.0.12.tgz"
+    integrity sha512-YQV9bUsemkzG81Ea295/nF/5GijnD2Af7QhEofh7xu+kvCN6RdodgNwwGWXB5GMI3NoyvQo0odNctoH/qLMIpg==
+  
   "@types/pug@^2.0.6":
     version "2.0.6"
     resolved "https://registry.npmjs.org/@types/pug/-/pug-2.0.6.tgz"
     integrity sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==
+  
+  "@types/topojson-client@^3.1.1":
+    version "3.1.1"
+    resolved "https://registry.npmjs.org/@types/topojson-client/-/topojson-client-3.1.1.tgz"
+    integrity sha512-E4/Z2Xg56kVLRzYWem/6uOKVcVNqqxEqlWM9qCG2tCV1BxuzvvXC02/ELoGJWgtKkQhfycBPlMFEuTFdA/YiTg==
+    dependencies:
+      "@types/geojson" "*"
+      "@types/topojson-specification" "*"
+  
+  "@types/topojson-specification@*":
+    version "1.0.2"
+    resolved "https://registry.npmjs.org/@types/topojson-specification/-/topojson-specification-1.0.2.tgz"
+    integrity sha512-SGc1NdX9g3UGDp6S+p+uyG+Z8CehS51sUJ9bejA25Xgn2kkAguILk6J9nxXK+0M/mbTBN7ypMA7+4HVLNMJ8ag==
+    dependencies:
+      "@types/geojson" "*"
   
   acorn@^8.8.2, acorn@^8.9.0:
     version "8.9.0"
@@ -570,6 +593,11 @@ Lockfile:
     version "4.1.1"
     resolved "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz"
     integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
+  
+  commander@2:
+    version "2.20.3"
+    resolved "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
+    integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
   
   commander@7:
     version "7.2.0"
@@ -1625,6 +1653,13 @@ Lockfile:
     integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
     dependencies:
       is-number "^7.0.0"
+  
+  topojson-client@^3.1.0:
+    version "3.1.0"
+    resolved "https://registry.npmjs.org/topojson-client/-/topojson-client-3.1.0.tgz"
+    integrity sha512-605uxS6bcYxGXw9qi62XyrV6Q3xwbndjachmNxu8HWTtVPxZfEJN9fd/SZS1Q54Sn2y0TMyMxFj/cJINqGHrKw==
+    dependencies:
+      commander "2"
   
   totalist@^3.0.0:
     version "3.0.1"

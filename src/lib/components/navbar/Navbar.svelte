@@ -1,12 +1,25 @@
 <script>
   const routes = [
     {
+      name: 'Debounce Testing Page 1',
+      link: '/debounceTestingPage1'
+    },
+    {
+      name: 'Debounce Testing Page 2',
+      link: '/debounceTestingPage2'
+    },
+
+    {
       name: 'Barchart',
       link: '/barchart'
     },
     {
       name: 'Map',
       link: '/map'
+    },
+    {
+      name: 'Chatting',
+      link: '/chatting'
     }
   ]
 </script>
